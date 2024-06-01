@@ -60,13 +60,16 @@ class WaterReminderApp:
     
     def remind_to_drink_water(self, interval_minutes):
         while self.running:
-            notification.notify(
+            try:
+                notification.notify(
                 title="💦 Hydration Reminder 💦",
                 message="It's time to drink water!",
                 app_name="Water Reminder",
                 timeout=10
-            )
-            time.sleep(interval_minutes * 60)
+                )
+                time.sleep(interval_minutes * 60)
+            except NotImplementedError as e:
+                print(f'notification failed: {e}')
     
     def update_status(self, message):
         self.status_bar.config(text=message)
